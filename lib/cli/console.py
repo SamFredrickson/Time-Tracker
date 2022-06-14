@@ -1,10 +1,17 @@
 from typing import Optional
-
 import typer
 
-from tracker import __app_name__, __version__
+from tracker.release import __app_name__, __version__
+from menu.main import Main
 
 app = typer.Typer()
+mainMenu = Main()
+
+@app.command(help='Shows main menu')
+def menu():
+    mainMenu.render()
+    item = mainMenu.ask_for_choice()
+    mainMenu.call_action(item)
 
 def _version_callback(value: bool) -> None:
     if value:

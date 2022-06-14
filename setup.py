@@ -15,7 +15,7 @@ setup(
     packages=find_packages('lib'),
     entry_points={
         'console_scripts': [
-            'tracker-start=tracker.cli.adhoc:main',
+            'tracker=tracker:main',
         ],
     },
 )

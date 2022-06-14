@@ -1,6 +1,6 @@
 from typer.testing import CliRunner
 
-from tracker import __app_name__, __version__, cli
+from example import __app_name__, __version__, cli
 
 runner = CliRunner()
 
