@@ -1,6 +1,5 @@
 from rich import print
 from rich.panel import Panel
-from rich.console import Console
 from rich.prompt import Prompt
 from menu.decorators import clear_screen
 
@@ -29,6 +28,10 @@ class Menu():
 
     def call_action(self, item):
         item.action.do()
+
+    def warn(self, message):
+        panel = Panel(message, title=f"[red]Error")
+        print(panel)
 
     @property
     def title(self):
