@@ -1,6 +1,8 @@
 from datetime import datetime
 from tracker.database import database
 from database.models.model import Model
+from database.types.date_range import DateRange
+from database.types.task import Task as TaskType
 
 class Task(Model):
     def __init__(self) -> None:
@@ -8,15 +10,21 @@ class Task(Model):
         self.__connnection = database.connection
         self.__table = 'tasks'
 
-    def get_all(self):
+    def get_tasks(self, date_range: DateRange):
+        task_list = []
         self.__connnection.commit()
         query = f'''
-               SELECT * FROM tasks_view
+               SELECT * FROM tasks 
+               WHERE date_created >= ?
+               AND date_created <= ?
             '''
-        self.__cursor.execute(query)
+        self.__cursor.execute(query, (date_range.date_from, date_range.date_to))
         self.__connnection.commit()
         tasks = self.__cursor.fetchall()
-        return tasks
+        for task in tasks:
+            id, name, start, end, description, date_created = task
+            task_list.append(TaskType(id=id, name=name, start=start, end=end, description=description, date_created=date_created))
+        return task_list
 
     def get_by_id(self, id):
         query = f'''
@@ -25,7 +33,11 @@ class Task(Model):
         '''
         self.__cursor.execute(query, (id, ))
         self.__connnection.commit()
-        return self.__cursor.fetchone()
+        task = self.__cursor.fetchone()
+        if not task:
+            return task
+        id, name, start, end, description, date_created = task
+        return TaskType(id=id, name=name, start=start, end=end, description=description, date_created=date_created)
 
     def delete(self, id):
         query = f'''

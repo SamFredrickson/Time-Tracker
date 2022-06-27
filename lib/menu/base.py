@@ -18,6 +18,16 @@ class Menu():
         panel = Panel(template, title=f"[yellow]{self.__title}")
         print(panel)
 
+    def get_template(self):
+        template = ''
+        for index, item in self.items:
+            name = item.name
+            color = item.color
+            template += f"{index} - [{color}]{name}[/{color}]"
+        panel = Panel(template, title=f"[yellow]{self.__title}")
+        return panel
+
+
     def ask_for_choice(self):
         choice = Prompt.ask(
             'Your choice',

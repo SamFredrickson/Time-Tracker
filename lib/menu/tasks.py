@@ -10,9 +10,9 @@ class TasksMenu(Menu):
     def __init__(self, previous=None) -> None:
         self.__previous = previous
         super().__init__('Tasks', [
-            Item('Add task\n', action=AddTask(self)),
-            Item('Change task\n', action=ChangeTask(self)),
-            Item('Remove task\n', action=RemoveTask(self)),
+            # Item('Add task\n', action=AddTask(self)),
+            # Item('Change task\n', action=ChangeTask(self)),
+            # Item('Remove task\n', action=RemoveTask(self)),
             Item('Show list\n', action=ShowTasks(self)),
             Item('Previous screen', 'red', action=Default(self.__previous))
         ])
