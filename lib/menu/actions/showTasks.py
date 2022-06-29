@@ -32,6 +32,33 @@ class ShowTasks(Action):
 
         return OrderedDict([('date_from', date_from), ('date_to', date_to)])
 
+    def cli_do(self, date_from: str, date_to: str):
+        validated_from = validate_date_pattern(date_from)
+        validated_to = validate_date_pattern(date_to)
+
+        if validated_from is False or validated_to is False:
+            self.__menu.warn('Invalid date format. Example: 2022-02-02')
+            return False
+
+        date_range = DateRange(date_from, date_to)
+        tasks = self.__task.get_tasks(date_range=date_range)
+        title = f'[b][yellow]{date_range.date_range_formatted}[/b]'
+        task_table = TaskTable(title=title, tasks=tasks)
+        self.__console.clear()
+        
+        tasks_not_empty = True if tasks else False
+        self.__task_table_menu = TasksTableMenu(
+            date_paginator=DatePaginator(date_range.date_from),
+            previous=self.__menu, 
+            tasks_not_empty=tasks_not_empty,
+            task=self.__task
+        )
+
+        self.__console.print(task_table.table)
+        print(self.__task_table_menu.get_template())
+        choice = self.__task_table_menu.ask_for_choice()
+        self.__task_table_menu.call_action(choice)
+
     def do(self):
         data = self.get_validated_data()
         date_range = DateRange(data['date_from'], data['date_to'])

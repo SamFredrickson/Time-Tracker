@@ -20,6 +20,29 @@ class ViewTask(Action):
     def get_formatted_list(self, task: TaskType):
         return TaskViewType(task.id, task.name, task.start, task.end, task.description, task.date_created).get_props()
 
+    def cli_do(self, id: int):
+        task = self.__task.get_by_id(id)
+        if not task:
+            self.__menu.warn("Task does not exist")
+            return False
+        
+        for item in self.get_formatted_list(task):
+            print(item)
+
+        view_menu = self.__view_menu.get_template()
+        print(view_menu)
+        item = self.__view_menu.ask_for_choice()
+
+        if hasattr(item.action, 'name'):
+             if item.action.name == 'delete':
+                self.__task.delete(id)
+                self.__previous.render()
+                item = self.__previous.ask_for_choice()
+                self.__previous.call_action(item)
+                return True
+
+        self.__view_menu.call_action(item)
+
     def do(self):
         id = Prompt.ask("Task number", default='1')
         task = self.__task.get_by_id(id)

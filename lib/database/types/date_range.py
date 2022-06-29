@@ -14,6 +14,6 @@ class DateRange:
     @property
     def date_range_formatted(self):
         '''Get date range format (from-to) if from != to'''
-        if self.__date_from is self.date_to:
+        if self.__date_from == self.__date_to:
             return self.__date_from
         return f'{self.__date_from}-{self.__date_to}'

@@ -43,6 +43,10 @@ class Menu():
         panel = Panel(message, title=f"[red]Error")
         print(panel)
 
+    def success(self, message):
+        panel = Panel(message, title=f"[green]Success")
+        print(panel)
+
     @property
     def title(self):
         return self.__title

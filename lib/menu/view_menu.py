@@ -9,7 +9,5 @@ class ViewMenu(Menu):
         super().__init__('View Task Options', [
             Item('Delete\n', action=DeleteTask(self)),
             Item('Update\n', action=Default(self.__previous)),
-            Item('Finish\n', action=Default(self.__previous)),
-            Item('Continue\n', action=Default(self.__previous)),
             Item('Previous screen', 'red', action=Default(self.__previous)),
         ])

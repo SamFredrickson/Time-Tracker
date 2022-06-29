@@ -50,8 +50,8 @@ class TaskViewType:
             self.id,
             self.name,
             self.start,
-            self.date_created,
             self.end,
+            self.date_created,
             self.total,
             self.description,
         ]

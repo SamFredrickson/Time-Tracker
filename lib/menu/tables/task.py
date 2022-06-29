@@ -7,6 +7,7 @@ from rich.panel import Panel
 from database.types.task import Task
 from utils.date import get_difference
 from rich.console import Console
+from math import ceil
 
 
 class TaskTable:
@@ -20,6 +21,7 @@ class TaskTable:
         self.__total_hours = 0
         self.__total_minutes = 0
         self.__total_seconds = 0
+        self.__total_in_hours = 0
 
         for task in tasks:
             difference = get_difference(task.start, task.end)
@@ -33,6 +35,9 @@ class TaskTable:
                 task.name, 
                 f'[b][grey24]{task.difference}[/b]'
             )
+
+        '''Convert all totals to hours'''
+        self.__total_in_hours = (self.__total_days * 24) + (self.__total_hours) + (self.__total_minutes / 60) + (self.__total_seconds / 3600)
 
         self.__table.add_row(
             '——',
@@ -48,4 +53,4 @@ class TaskTable:
 
     @property
     def total(self):
-        return f'[b][red]{self.__total_days}d {self.__total_hours}h {self.__total_minutes}m {self.__total_seconds}s[/b]'
+        return f'[b][red]{self.__total_days}d {self.__total_hours}h {self.__total_minutes}m {self.__total_seconds}s (~{int(self.__total_in_hours)}h)[/b]'
