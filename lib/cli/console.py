@@ -2,15 +2,16 @@ from datetime import datetime
 from typing import Optional
 from utils.date import get_year_pattern
 import typer
-from menu.actions.showTasks import ShowTasks
+from menu.actions.show_tasks import ShowTasks
 
 from tracker.release import __app_name__, __version__
 from menu.main import Main
 from menu.tasks import TasksMenu
-from menu.actions.showTasks import ShowTasks
+from menu.actions.show_tasks import ShowTasks
 from menu.actions.view_task import ViewTask
 from menu.actions.delete_task import DeleteTask
 from menu.actions.add_task import AddTask
+from menu.actions.update_task import UpdateTask
 
 app = typer.Typer()
 
@@ -48,6 +49,12 @@ def task_create():
      main_menu = Main()
      delete_action = AddTask(main_menu)
      delete_action.do()
+
+@app.command(help='Update task')
+def task_update(id: int = typer.Option(None, help="Task id")):
+     main_menu = Main()
+     update_acition = UpdateTask(main_menu)
+     update_acition.do(id)
 
 def _version_callback(value: bool) -> None:
     if value:

@@ -2,7 +2,7 @@ from menu.base import Menu
 from menu.item import Item
 from menu.actions.default import Default
 from menu.actions.add_task import AddTask
-from menu.actions.showTasks import ShowTasks
+from menu.actions.show_tasks import ShowTasks
 from menu.actions.removeTask import RemoveTask
 from menu.actions.changeTask import ChangeTask
 

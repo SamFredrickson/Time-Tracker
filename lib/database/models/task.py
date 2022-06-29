@@ -81,3 +81,4 @@ class Task(Model):
         '''
         self.__cursor.execute(query, (value, id))
         self.__connnection.commit()
+        return self.__cursor.lastrowid

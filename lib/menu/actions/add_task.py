@@ -40,10 +40,6 @@ class AddTask(Action):
             self.__menu.warn('Name is required')
             return self.ask_and_validate()
         
-        if self.__task.is_task_exists_for_date(date, name) is not None:
-            self.__menu.warn(f'This task name is exists for this date ({date})')
-            return self.ask_and_validate()
-        
         start = f'{date} {start}'
 
         return OrderedDict([('name', name), ('start', start), ('end', end), ('description', description), ('date', date)])

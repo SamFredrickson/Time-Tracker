@@ -2,6 +2,7 @@ from collections import OrderedDict
 from typing import List
 from menu.view_menu import ViewMenu
 from menu.actions.action import Action
+from menu.actions.update_task import UpdateTask
 from database.types.task import Task as TaskType
 from database.types.task_view import TaskViewType
 from database.models.task import Task
@@ -40,6 +41,11 @@ class ViewTask(Action):
                 item = self.__previous.ask_for_choice()
                 self.__previous.call_action(item)
                 return True
+            
+             if item.action.name == 'update':
+                update_task = UpdateTask(menu=self.__previous)
+                update_task.do(id=id)
+                return True
 
         self.__view_menu.call_action(item)
 
@@ -64,5 +70,10 @@ class ViewTask(Action):
                 item = self.__previous.ask_for_choice()
                 self.__previous.call_action(item)
                 return True
+            
+             if item.action.name == 'update':
+                update_task = UpdateTask(menu=self.__previous)
+                update_task.do(id=id)
+                return True
 
-        self.__view_menu.call_action(item)
+        self.__previous.call_action(item)

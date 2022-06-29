@@ -1,8 +1,9 @@
 from menu.actions.action import Action
+from menu.main import Main
 
 class MainAction(Action):
     def __init__(self) -> None:
-        self.__menu = 'assa'
+        self.__menu = Main()
 
     def do(self):
         self.__menu.render()

@@ -24,6 +24,12 @@ def get_time_pattern():
 def get_datetime_pattern():
     return "%Y-%m-%d %H:%M:%S"
 
+def parse_time_from_date(date: str):
+    m = re.search(r'\d\d:\d\d:\d\d', date)
+    if m:
+        return m.group()
+    return False
+
 def get_formatted_difference(start, end: None):
      date_start = datetime.strptime(start, get_datetime_pattern())
      status = ""
