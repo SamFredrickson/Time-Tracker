@@ -13,13 +13,7 @@ class UpdateTask(Action):
         self.__task = Task()
         self.__name = 'update'
 
-    def ask_and_validate(self, id):
-        task = self.__task.get_by_id(id)
-
-        if task is None:
-            self.__menu.warn('Task does not exists')
-            return self.ask_and_validate()
-
+    def ask_and_validate(self, task: Task):
         start = parse_time_from_date(task.start)
 
         if task.end is not None:
@@ -41,16 +35,16 @@ class UpdateTask(Action):
 
         if validated_date is False:
             self.__menu.warn('Invalid Date format. Example: 2022-02-02')
-            return self.ask_and_validate(id)
+            return self.ask_and_validate(task)
 
         if validated_start is False:
             self.__menu.warn('Invalid Start format. Example: 00:30:00')
-            return self.ask_and_validate(id)
+            return self.ask_and_validate(task)
 
         if end is not None and end != '-':
             if validate_date_pattern(end, r'\d\d:\d\d:\d\d') is False:
                 self.__menu.warn('Invalid End format. Example: 00:32:00')
-                return self.ask_and_validate(id)
+                return self.ask_and_validate(task)
             end = f'{date} {end}'
         
         if end == '-':
@@ -58,7 +52,7 @@ class UpdateTask(Action):
 
         if name is None:
             self.__menu.warn('Name is required')
-            return self.ask_and_validate(id)
+            return self.ask_and_validate(task)
         
         start = f'{date} {start}'
 
@@ -71,7 +65,12 @@ class UpdateTask(Action):
         }
 
     def do(self, id: int):
-       data = self.ask_and_validate(id=id)
+       task = self.__task.get_by_id(id)
+       if task is None:
+            self.__menu.warn('Task does not exists')
+            return False
+
+       data = self.ask_and_validate(task)
        id = data['id']
        for field, value in data['ordered_dict'].items():
             self.__task.update(id, field, value)

@@ -33,13 +33,13 @@ def task_list(
     show_tasks.cli_do(date_from, date_to)
 
 @app.command(help='View task info')
-def task_view(id: int = typer.Option(None, help="Task id")):    
+def task_view(id: int = typer.Option(..., help="Task id")):    
      main_menu = Main()
      view_task = ViewTask(menu=main_menu, previous=main_menu)  
      view_task.cli_do(id)
 
 @app.command(help='Delete task')
-def task_delete(id: int = typer.Option(None, help="Task id")):
+def task_delete(id: int = typer.Option(..., help="Task id")):
      main_menu = Main()
      delete_action = DeleteTask(main_menu)
      delete_action.cli_do(id)
@@ -51,10 +51,10 @@ def task_create():
      delete_action.do()
 
 @app.command(help='Update task')
-def task_update(id: int = typer.Option(None, help="Task id")):
+def task_update(id: int = typer.Option(..., help="Task id")):
      main_menu = Main()
      update_acition = UpdateTask(main_menu)
-     update_acition.do(id)
+     update_acition.do(id=id)
 
 def _version_callback(value: bool) -> None:
     if value:

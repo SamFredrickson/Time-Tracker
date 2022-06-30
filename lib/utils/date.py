@@ -1,6 +1,5 @@
 from collections import OrderedDict
 from datetime import datetime, timedelta
-from time import time
 import re
 
 def get_current_date_range():
