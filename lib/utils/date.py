@@ -30,6 +30,13 @@ def parse_time_from_date(date: str):
         return m.group()
     return False
 
+def get_formatted_total(days: int, hours: int, minutes: int, seconds: int):
+    delta = timedelta(days=days, hours=hours, minutes=minutes, seconds=seconds)
+    time = str(delta).split(' ')[-1]
+    hours, minutes, seconds = time.split(':')
+    
+    return f'''{delta.days}d {hours}h {minutes}m {seconds}s'''
+
 def get_formatted_difference(start, end: None):
      date_start = datetime.strptime(start, get_datetime_pattern())
      status = ""
@@ -45,7 +52,12 @@ def get_formatted_difference(start, end: None):
      time = str(calculation).split(' ')[-1]
      hours, minutes, seconds = time.split(':')
 
-     return f'''{str(calculation.days)}d {int(hours)}h {int(minutes)}m {int(seconds)}s {status}'''
+     days_formatted = f'{str(calculation.days)}d' if int(calculation.days) > 0 else ''
+     hours_formatted = f'{int(hours)}h' if int(hours) > 0 else ''
+     minutes_formatted = f'{int(minutes)}m' if int(minutes) > 0 else ''
+     seconds_formatted = f'{int(seconds)}s' if int(seconds) > 0 else ''
+
+     return f'''{days_formatted} {hours_formatted} {minutes_formatted} {seconds_formatted} {status}'''
 
 class DatePaginator:
     def __init__(self, date: str) -> None:

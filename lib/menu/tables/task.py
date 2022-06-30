@@ -5,7 +5,7 @@ from rich import box
 from rich import print
 from rich.panel import Panel
 from database.types.task import Task
-from utils.date import get_difference
+from utils.date import get_difference, get_formatted_total
 from rich.console import Console
 from math import ceil
 
@@ -53,4 +53,4 @@ class TaskTable:
 
     @property
     def total(self):
-        return f'[b][red]{self.__total_days}d {self.__total_hours}h {self.__total_minutes}m {self.__total_seconds}s (~{int(self.__total_in_hours)}h)[/b]'
+        return f'[b][red]{get_formatted_total(self.__total_days, self.__total_hours, self.__total_minutes, self.__total_seconds)}[/red][/b]'
