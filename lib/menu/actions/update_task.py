@@ -60,7 +60,7 @@ class UpdateTask(Action):
             description = old_description
 
         return {
-            "id": id,
+            "id": task.id,
             "ordered_dict": OrderedDict([('name', name), ('start', start), ('end', end), ('description', description), ('date_created', date)])
         }
 
@@ -73,6 +73,7 @@ class UpdateTask(Action):
        data = self.ask_and_validate(task)
        id = data['id']
        for field, value in data['ordered_dict'].items():
+            print(id, field, value)
             self.__task.update(id, field, value)
 
        self.__menu.render()
