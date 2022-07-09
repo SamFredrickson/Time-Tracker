@@ -34,7 +34,7 @@ def get_formatted_total(days: int, hours: int, minutes: int, seconds: int):
     time = str(delta).split(' ')[-1]
     hours, minutes, seconds = time.split(':')
     
-    return f'''{delta.days}d {hours}h {minutes}m {seconds}s'''
+    return f'''{delta.days}d {int(hours)}h {int(minutes)}m {int(seconds)}s'''
 
 def get_formatted_difference(start, end: None):
      date_start = datetime.strptime(start, get_datetime_pattern())
@@ -49,14 +49,23 @@ def get_formatted_difference(start, end: None):
          status = "[yellow](in progress)"
      calculation = date_end - date_start
      time = str(calculation).split(' ')[-1]
-     hours, minutes, seconds = time.split(':')
+     hours, minutes, seconds = time.split(':') # hours, minutes, seconds
+     template = ''
+     if calculation.days > 0:
+         template += f'{calculation.days}d'
+     
+     if int(hours) > 0:
+         template += f'{int(hours)}h '
+    
+     if int(minutes) > 0:
+         template += f'{int(minutes)}m '
+     
+     if int(seconds) > 0:
+         template += f'{int(seconds)}s '
+    
+     template += status
 
-     days_formatted = f'{str(calculation.days)}d' if int(calculation.days) > 0 else ''
-     hours_formatted = f'{int(hours)}h' if int(hours) > 0 else ''
-     minutes_formatted = f'{int(minutes)}m' if int(minutes) > 0 else ''
-     seconds_formatted = f'{int(seconds)}s' if int(seconds) > 0 else ''
-
-     return f'''{days_formatted} {hours_formatted} {minutes_formatted} {seconds_formatted} {status}'''
+     return template
 
 class DatePaginator:
     def __init__(self, date: str) -> None:

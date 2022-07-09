@@ -9,6 +9,7 @@ from database.models.task import Task
 from rich import print
 from rich.console import Console
 from rich.prompt import Prompt
+from rich.prompt import Confirm
 
 class ViewTask(Action):
     def __init__(self, menu, previous=None) -> None:
@@ -65,7 +66,12 @@ class ViewTask(Action):
 
         if hasattr(item.action, 'name'):
              if item.action.name == 'delete':
-                self.__task.delete(id)
+                print(f'[b]Task: [red]{task.id} - {task.name}[/b]')
+                sure = Confirm.ask('Are you sure?')
+                
+                if sure:
+                    self.__task.delete(id)
+
                 self.__previous.render()
                 item = self.__previous.ask_for_choice()
                 self.__previous.call_action(item)

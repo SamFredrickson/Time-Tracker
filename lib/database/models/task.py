@@ -3,7 +3,7 @@ from tracker.database import database
 from database.models.model import Model
 from database.types.date_range import DateRange
 from database.types.task import Task as TaskType
-from utils.date import get_year_pattern, get_datetime_pattern
+from utils.date import get_difference, get_formatted_total, get_year_pattern, get_datetime_pattern, get_formatted_difference
 
 class Task(Model):
     def __init__(self) -> None:
@@ -36,6 +36,55 @@ class Task(Model):
             id, name, start, end, description, date_created = task
             task_list.append(TaskType(id=id, name=name, start=start, end=end, description=description, date_created=date_created))
         return task_list
+
+    def get_tasks_for_csv(self, date_range: DateRange):
+        task_list = []
+        query = f'''
+               SELECT * FROM tasks 
+               WHERE date_created >= ?
+               AND date_created <= ?
+            '''
+        self.__cursor.execute(query, (date_range.date_from, date_range.date_to))
+        self.__connnection.commit()
+        tasks = self.__cursor.fetchall()
+
+        fieldnames = ['S. No.', 'Name', 'Started', 'Finished', 'Total', 'Description']
+        total_days = 0
+        total_hours = 0
+        total_minutes = 0
+        total_seconds = 0
+
+        for task in tasks:
+            id, name, start, end, description, date_created = task
+            
+            difference = get_difference(start, end)
+            total_days += difference['days']
+            total_hours += difference['hours']
+            total_minutes += difference['minutes']
+            total_seconds += difference['seconds']
+
+            task_list.append({
+                'S. No.': id,
+                'Name': name,
+                'Started': start,
+                'Finished': end,
+                'Total': get_formatted_difference(start, end),
+                'Description': description
+            })
+
+        task_list.append({
+            'S. No.': '—',
+            'Name': '—',
+            'Started': '—',
+            'Finished': '—',
+            'Total': get_formatted_total(total_days, total_hours, total_minutes, total_seconds),
+            'Description': '—'
+        })
+
+        return {
+            "fieldnames": fieldnames,
+            "data": task_list
+        }
 
     def get_by_id(self, id):
         query = f'''

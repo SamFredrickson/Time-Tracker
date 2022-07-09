@@ -1,15 +1,18 @@
+from database.queries import migrations
 import sqlite3
-from database.queries import create_tables_queries
+import pathlib
 
 class Database:
+    path = pathlib.Path('storage').resolve()
     name = 'database.db'
-    def __init__(self) -> None:
-        self.__connection = sqlite3.connect(self.name)
-        self.__cursor = self.__connection.cursor()
-        self.__create_tables()
 
-    def __create_tables(self):
-        for query in create_tables_queries:
+    def __init__(self) -> None:
+        self.__connection = sqlite3.connect(f'{self.path}/{self.name}')
+        self.__cursor = self.__connection.cursor()
+        self.migrate()
+
+    def migrate(self):
+        for query in migrations:
             self.__cursor.execute(query)
             self.__connection.commit()
     

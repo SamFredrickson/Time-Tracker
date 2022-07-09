@@ -10,6 +10,6 @@ class Main(Menu):
     def __init__(self) -> None:
         super().__init__('Main Menu', [
             Item('Tasks\n', action=Tasks(self)),
-            Item('Tracking settings\n', action=Settings(self)),
+            # Item('Tracking settings\n', action=Settings(self)),
             Item('Exit', 'red', action=Exit())
         ])

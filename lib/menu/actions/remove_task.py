@@ -1,16 +1,12 @@
 from collections import OrderedDict
 from menu.actions.action import Action
 from database.models.task import Task
-from database.models.taskname import TaskName
 from rich.prompt import Prompt
-from rich import print
-from datetime import datetime
 
 class RemoveTask(Action):
     def __init__(self, menu) -> None:
         self.__menu = menu
         self.__task = Task()
-        self.__taskname = TaskName()
 
     def ask(self):
         id = Prompt.ask('Task id', default=None)

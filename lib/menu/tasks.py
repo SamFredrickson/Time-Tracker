@@ -4,7 +4,6 @@ from menu.actions.default import Default
 from menu.actions.add_task import AddTask
 from menu.actions.show_tasks import ShowTasks
 from menu.actions.remove_task import RemoveTask
-from menu.actions.change_task import ChangeTask
 
 class TasksMenu(Menu):
     def __init__(self, previous=None) -> None:
