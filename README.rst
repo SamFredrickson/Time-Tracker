@@ -39,6 +39,10 @@ Use ``tracker --help`` to show availiable commands
 
 Use ``tracker [command] --help`` to show help for specfic console command
 
+Examples:
+
+
+
 Authors
 =======
 
