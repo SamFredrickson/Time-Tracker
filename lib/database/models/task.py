@@ -29,22 +29,96 @@ class Task(Model):
                WHERE date_created >= ?
                AND date_created <= ?
             '''
+            
         self.__cursor.execute(query, (date_range.date_from, date_range.date_to))
         self.__connnection.commit()
         tasks = self.__cursor.fetchall()
+
         for task in tasks:
             id, name, start, end, description, date_created = task
-            task_list.append(TaskType(id=id, name=name, start=start, end=end, description=description, date_created=date_created))
-        return task_list
+            task_list.append(
+                TaskType
+                (
+                    id=id, 
+                    name=name, 
+                    start=start, 
+                    end=end, 
+                    description=description, 
+                    date_created=date_created
+                )
+            )
 
-    def get_tasks_for_csv(self, date_range: DateRange):
+        return task_list
+    
+    def get_tasks_for_html(
+        self, 
+        date_range: DateRange,
+        name=None
+    ):
         task_list = []
+        execute_fields = (
+            date_range.date_from, 
+            date_range.date_to
+        )
+
         query = f'''
                SELECT * FROM tasks 
                WHERE date_created >= ?
                AND date_created <= ?
             '''
-        self.__cursor.execute(query, (date_range.date_from, date_range.date_to))
+
+        if name is not None:
+            query += ' AND name = ?'
+            execute_fields = (
+            date_range.date_from, 
+            date_range.date_to, 
+            name
+        )
+
+        self.__cursor.execute(query, execute_fields)
+        self.__connnection.commit()
+        tasks = self.__cursor.fetchall()
+
+        for task in tasks:
+            id, name, start, end, description, date_created = task
+            task_list.append(
+                TaskType(
+                    id=id, 
+                    name=name, 
+                    start=start, 
+                    end=end, 
+                    description=description, 
+                    date_created=date_created
+                )
+            )
+
+        return task_list
+
+    def get_tasks_for_csv(
+        self,
+        date_range: DateRange,
+        name=None
+    ):
+        task_list = []
+        execute_fields = (
+            date_range.date_from, 
+            date_range.date_to
+        )
+
+        query = f'''
+               SELECT * FROM tasks 
+               WHERE date_created >= ?
+               AND date_created <= ?
+            '''
+        if name is not None:
+            query += ' AND name = ?'
+            execute_fields = (
+                date_range.date_from, 
+                date_range.date_to, 
+                name
+            )
+
+        self.__cursor.execute(query, execute_fields)
         self.__connnection.commit()
         tasks = self.__cursor.fetchall()
 

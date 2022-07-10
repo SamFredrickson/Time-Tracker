@@ -8,6 +8,10 @@ from datetime import datetime
 from utils.date import get_time_pattern, get_year_pattern, parse_time_from_date, validate_date_pattern
 
 class UpdateTask(Action):
+    signs_and_words = [
+        '-',
+        'now'
+    ]
     def __init__(self, menu) -> None:
         self.__menu = menu
         self.__task = Task()
@@ -41,7 +45,7 @@ class UpdateTask(Action):
             self.__menu.warn('Invalid Start format. Example: 00:30:00')
             return self.ask_and_validate(task)
 
-        if end is not None and end != '-':
+        if end is not None and end not in self.signs_and_words:
             if validate_date_pattern(end, r'\d\d:\d\d:\d\d') is False:
                 self.__menu.warn('Invalid End format. Example: 00:32:00')
                 return self.ask_and_validate(task)
@@ -49,6 +53,10 @@ class UpdateTask(Action):
         
         if end == '-':
             end = None
+        
+        current_time = datetime.now().strftime( get_time_pattern() )
+        if end == 'now':
+            end = f'{date} {current_time}'
 
         if name is None:
             self.__menu.warn('Name is required')
@@ -73,7 +81,6 @@ class UpdateTask(Action):
        data = self.ask_and_validate(task)
        id = data['id']
        for field, value in data['ordered_dict'].items():
-            print(id, field, value)
             self.__task.update(id, field, value)
 
        self.__menu.render()

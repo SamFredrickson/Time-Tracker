@@ -1,11 +1,12 @@
 from collections import OrderedDict
 from datetime import datetime
 from typing import Optional
-from utils.date import get_year_pattern, validate_date_pattern
+from utils.date import get_time_pattern, get_year_pattern, validate_date_pattern
 import typer
 from menu.actions.show_tasks import ShowTasks
 from database.types.date_range import DateRange
 from export.csv_exporter import CsvExporter
+from export.html_exporter import HtmlExporter
 
 from rich.prompt import Prompt
 from rich.prompt import Confirm
@@ -63,15 +64,45 @@ def task_update(id: int = typer.Option(..., help="Task id")):
      update_acition = UpdateTask(main_menu)
      update_acition.do(id=id)
 
+@app.command(help='Stop running task')
+def task_stop(
+    id: int = typer.Option(..., help="Task id"),
+    time: str = typer.Option(datetime.now().strftime(get_time_pattern()), help='Stop time (default current)')
+):
+    main_menu = Main()
+    model = Task()
+    task = model.get_by_id(id)
+    if task is None:
+        main_menu.warn('Task does not exist')
+        return False
+    validated_time = validate_date_pattern(time, r'\d\d:\d\d:\d\d')
+    if validated_time is False:
+        main_menu.warn('Invalid Time format. Example: 00:30:00')
+        return False
+    model.update(id, 'end', f'{task.date_created} {time}')
+    main_menu.success(f'Finish time ({time}) successfully set')
+
+@app.command(help='Continue stopped task')
+def task_continue(
+    id: int = typer.Option(..., help="Task id")
+):
+    main_menu = Main()
+    model = Task()
+    task = model.get_by_id(id)
+    if task is None:
+        main_menu.warn('Task does not exist')
+        return False
+    model.update(id, 'end', None)
+    main_menu.success('Task is in progress again')
+
 @app.command(help='Export tasks to file')
 def task_export(
     date_from=typer.Option(datetime.now().strftime(get_year_pattern()), help="Date from, default today"), 
     date_to=typer.Option(datetime.now().strftime(get_year_pattern()), help="Date to, default today"),
+    name: str = typer.Option(None, help="Task name"),
     type=typer.Option('csv', help="File format (csv, html)")
 ):
     main_menu = Main()
-    task = Task()
-    csv_exporter = CsvExporter()
 
     validated_from = validate_date_pattern(date_from)
     validated_to = validate_date_pattern(date_to)
@@ -81,9 +112,22 @@ def task_export(
         return False
 
     date_range = DateRange(date_from=date_from, date_to=date_to)
-    tasks = task.get_tasks_for_csv(date_range=date_range)
-    csv_exporter.write(fieldnames=tasks['fieldnames'], data=tasks['data'])
+
+    if type == 'csv':
+        task = Task()
+        csv_exporter = CsvExporter()
+
+        tasks = task.get_tasks_for_csv(date_range=date_range, name=name)
+        csv_exporter.write(fieldnames=tasks['fieldnames'], data=tasks['data'])
+    
+    if type == 'html':
+        task = Task()
+        html_exporter = HtmlExporter()
+
+        tasks = task.get_tasks_for_html(date_range=date_range, name=name)
+        html_exporter.write(tasks=tasks)
    
+    main_menu.success('Tasks successully exported (export dir in the project dir).')
 
 def _version_callback(value: bool) -> None:
     if value:
