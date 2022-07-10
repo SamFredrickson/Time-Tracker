@@ -22,6 +22,7 @@ git clone https://github.com/SamFredrickson/Time-Tracker time_tracker
 cd time_tracker
 
 python -m venv venv (optionally)
+
 source venv/bin/activate (optionally)
 
 python setup.py install
