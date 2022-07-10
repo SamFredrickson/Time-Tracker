@@ -33,7 +33,7 @@ The console application allows you to manipulate tasks in two ways:
 1. Menu (``tracker menu``)
 2. Console commands (``tracker [command] [arguments]``)
 
-Use ``tracker menu`` to show availiable commands
+Use ``tracker --help`` to show availiable commands
 
 Use ``tracker [command] --help`` to show help for specfic console command
 
