@@ -148,7 +148,7 @@ Table consists of three columns:
 
 Last row has red text on black background and shows total spent time of all tasks.
 
-Tasks options:
+**Tasks options:**
 
 There's tasks options under table.
 
