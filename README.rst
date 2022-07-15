@@ -39,9 +39,12 @@ Use ``tracker --help`` to show availiable commands
 
 Use ``tracker [command] --help`` to show help for specfic console command
 
-Examples:
+### Menu
 
+Menu is one the ways to manipulate tasks, to start working with menu type ``tracker menu`` command.
+You must see something like this:
 
+![first](images/first.png)
 
 Authors
 =======
