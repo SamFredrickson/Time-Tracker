@@ -18,23 +18,27 @@ Installation
 
 ### Globally
 
-git clone https://github.com/SamFredrickson/Time-Tracker time_tracker
+<sup>
+    git clone https://github.com/SamFredrickson/Time-Tracker time_tracker
 
-cd time_tracker
+    cd time_tracker
 
-python setup.py install
+    python setup.py install
+</sup>
 
 ### With virtual environment
 
-git clone https://github.com/SamFredrickson/Time-Tracker time_tracker
+<sup>
+    git clone https://github.com/SamFredrickson/Time-Tracker time_tracker
 
-cd time_tracker
+    cd time_tracker
 
-python -m venv venv (optionally)
+    python -m venv venv 
 
-source venv/bin/activate (optionally)
+    source venv/bin/activate
 
-python setup.py install
+    python setup.py install
+</sup>
 
 
 Usage
