@@ -3,11 +3,11 @@ from utils.date import get_difference, get_formatted_total
 from .exporter import Exporter
 from datetime import datetime
 from database.types.task import Task as TaskType
-import pathlib
+from .templates.content import content
+from .templates.main import main
 
 class HtmlExporter(Exporter):
     format = 'html'
-    root_path = pathlib.Path('lib', 'export', 'templates').resolve()
 
     def __init__(self) -> None:
         super().__init__()
@@ -15,11 +15,6 @@ class HtmlExporter(Exporter):
     def write(self, tasks=List[TaskType]):
         content_concatinated = ''
 
-        with open(self.content_path, 'r') as file:
-            content = file.read()
-        with open(self.template_path, 'r') as file:
-            template = file.read()
-        
         total_days = 0
         total_hours = 0
         total_minutes = 0
@@ -51,17 +46,9 @@ class HtmlExporter(Exporter):
             )
         
         name = self.generate_name()
-        template_formatted = template.format(
+        template_formatted = main.format(
             content=content_concatinated,
         )
 
-        with open(f'{self.path}/{name}', 'wt') as file:
+        with open(f'{self.export_dir}/{name}', 'wt') as file:
             file.write(template_formatted)
-
-    @property
-    def content_path(self):
-        return f'{self.root_path}/content.html'
-
-    @property
-    def template_path(self):
-        return f'{self.root_path}/template.html'

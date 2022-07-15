@@ -1,12 +1,13 @@
-from collections import OrderedDict
 from datetime import datetime
 from typing import Optional
-from utils.date import get_time_pattern, get_year_pattern, validate_date_pattern
 import typer
+import os
+
 from menu.actions.show_tasks import ShowTasks
 from database.types.date_range import DateRange
 from export.csv_exporter import CsvExporter
 from export.html_exporter import HtmlExporter
+from utils.date import get_time_pattern, get_year_pattern, validate_date_pattern
 
 from rich.prompt import Prompt
 from rich.prompt import Confirm
@@ -127,7 +128,8 @@ def task_export(
         tasks = task.get_tasks_for_html(date_range=date_range, name=name)
         html_exporter.write(tasks=tasks)
    
-    main_menu.success('Tasks successully exported (export dir in the project dir).')
+    home = os.path.join(os.path.expanduser('~'), '.local', 'share')
+    main_menu.success(f'Tasks successully exported to {home}')
 
 def _version_callback(value: bool) -> None:
     if value:
