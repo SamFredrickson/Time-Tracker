@@ -1,13 +1,19 @@
 from database.queries import migrations
 import sqlite3
-import pathlib
+import os
 
 class Database:
-    path = pathlib.Path('storage').resolve()
-    name = 'database.db'
-
     def __init__(self) -> None:
-        self.__connection = sqlite3.connect(f'{self.path}/{self.name}')
+        home = os.path.join(os.path.expanduser('~'), '.local', 'share')
+        database_dir = os.path.join(home, 'tracker')
+        name = 'bond.db'
+
+        if not os.path.exists(database_dir):
+            os.makedirs(database_dir, 0o744)
+
+        db_path = os.path.join(database_dir, name)
+
+        self.__connection = sqlite3.connect(db_path)
         self.__cursor = self.__connection.cursor()
         self.migrate()
 
