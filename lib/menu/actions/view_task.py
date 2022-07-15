@@ -1,5 +1,3 @@
-from collections import OrderedDict
-from typing import List
 from menu.view_menu import ViewMenu
 from menu.actions.action import Action
 from menu.actions.update_task import UpdateTask
@@ -14,7 +12,7 @@ from rich.prompt import Confirm
 class ViewTask(Action):
     def __init__(self, menu, previous=None) -> None:
         self.__menu = menu
-        self.__view_menu = ViewMenu(previous=self.__menu)
+        self.__view_menu = ViewMenu(previous=previous)
         self.__task = Task()
         self.__previous = previous
         self.__console = Console()

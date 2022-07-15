@@ -30,7 +30,10 @@ class UpdateTask(Action):
         date = Prompt.ask('Date', default=task.date_created)
         name = Prompt.ask('Task name', default=task.name)
         start = Prompt.ask('Task started', default=start)
-        print("\n[b][yellow]Tip: use '-' sign if you need to remove end-time and continue task[/b]\n")
+        print('''\n[b][yellow]
+        Tip: use '-' sign if you need to remove end-time and continue task
+        Tip: use 'now' word to finish task with current time
+        [/b]\n''')
         end = Prompt.ask('Task ended', default=end)
         description = Prompt.ask('Description', default=None)
 
