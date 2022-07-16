@@ -68,7 +68,7 @@ def task_update(id: int = typer.Option(..., help="Task id")):
 @app.command(help='Stop running task')
 def task_stop(
     id: int = typer.Option(..., help="Task id"),
-    time: str = typer.Option(datetime.now().strftime(get_time_pattern()), help='Stop time (default current)')
+    time: str = typer.Option(datetime.now().strftime(get_time_pattern()), help='Stop time with specific time')
 ):
     main_menu = Main()
     model = Task()
@@ -83,7 +83,7 @@ def task_stop(
     model.update(id, 'end', f'{task.date_created} {time}')
     main_menu.success(f'Finish time ({time}) successfully set')
 
-@app.command(help='Continue stopped task')
+@app.command(help='Continue task you stopped before')
 def task_continue(
     id: int = typer.Option(..., help="Task id")
 ):

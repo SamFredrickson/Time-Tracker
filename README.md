@@ -226,6 +226,61 @@ Avialables options in navigiation mode:
 
 After getting a list with date you need type "exit".
 
+## Console
+
+Personally speaking, console is more comfortable way to manipulate tasks.
+
+**If you didn't read Menu guide above i strongly recommend to do it, because console commands will show you main interface components we described before.**
+
+Let's what commands we have by typing ``tracker --help``
+
+```
+Usage: Time tracker [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -v, --version         Show the application's version and exit.
+  --install-completion  Install completion for the current shell.
+  --show-completion     Show completion for the current shell, to copy it or
+                        customize the installation.
+  --help                Show this message and exit.
+
+Commands:
+  menu           Shows main menu
+  task-continue  Continue stopped task
+  task-create    Create task
+  task-delete    Delete task
+  task-export    Export tasks to file
+  task-list      Shows tasks list
+  task-stop      Stop running task
+  task-update    Update task
+  task-view      View task info
+
+```
+
+You are already familiar with ``tracker menu`` command.
+
+There's no point to describe each of them because they've been already described in your terminal.
+
+To get description for a specific command type ``tracker [command] --help``. For example, ``tracker task-list --help``
+
+```Usage: Time tracker task-list [OPTIONS]
+
+  Shows tasks list
+
+Options:
+  --date-from TEXT  Date from, default today  [default: 2022-07-16]
+  --date-to TEXT    Date to, default today  [default: 2022-07-16]
+  --help            Show this message and exit.
+```
+
+As we know task-list is section where we can watch our tasks. In menu mode we must provide some extra info like date range before get list. Task list console command is not an exception. 
+
+Enter ``tracker task-list`` command to get list for today, enter ``tracker task-list --date-from 2022-02-02 --date-to 2022-03-04`` to list from and to specific days.
+
+So, these console commands work in the same way like menu mode, but you don't need to launch menu mode every time.
+
+Use console commands and CTRL + C combinations for better experience. 
+
 Authors
 =======
 
