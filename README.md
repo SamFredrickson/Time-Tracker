@@ -40,6 +40,23 @@ source venv/bin/activate
 python setup.py install
 ```
 
+### Have a try with docker
+
+Just take a look at the app. Download and remove container after exit.
+
+```
+docker run -it --rm samfredrickson/timetracker sh
+```
+
+Use this command to keep container running
+
+```
+docker run -it samfredrickson/timetracker sh
+```
+
+After successfull pulling of image you jumps into container env where you can execute any commands.
+
+Read *Usage* section below to find out availiable commands.
 
 Usage
 =================
