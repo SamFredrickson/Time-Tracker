@@ -56,7 +56,7 @@ Use ``tracker [command] --help`` to show help for specfic console command
 ### Menu
 
 Menu is one of the ways to manipulate tasks, to start working with menu type ``tracker menu`` command.
-You must see something like this:
+You will see something like this:
 
 ![first](images/first.png)
 
@@ -77,7 +77,7 @@ If you are in Tasks section just enter "1" and read carefully what to you need t
 
 ![third](images/third.png)
 
-You will be asked to input fields below consistently
+You will be asked to fill fields below consistently
 
 1. Date (optional)
 2. Task name (required)
@@ -85,15 +85,25 @@ You will be asked to input fields below consistently
 4. Task ended (optional)
 5. Description (optional)
 
-**WARNING! Cyan values in parentheses are default values and you dont need to enter values in parentheses again**
+**WARNING! Cyan values in parentheses are default values and you dont need to copy them**
+
+*Date*
 
 By default, Date is current day's date of your computer system. If you want to create a task for yesterday or for tomorrow you must enter this date in proper format (2022-02-02)
 
+*Task name*
+
 Task name is just a task name, enter short name. Example (drinking coffee)
+
+*Task started*
 
 By default, Task started is current time of your computer system. If you want to create a task with specific time you must enter this time in proper format (15:30:00)
 
+*Task ended*
+
 Task ended is time you finish task, it's optional and you can leave it empty. In case you forgot to create a task you can enter time in proper format (03:00:00).
+
+*Description*
 
 Description is optional and you can leave it empty.
 
@@ -101,7 +111,7 @@ So, our final result is:
 
 ![fourth](images/fourth.png)
 
-After filling all fields and pressing "enter" key your task is created and menu is to it's initial state
+After filling all fields and pressing "enter" key your task is created and menu switched to it's initial state.
 
 ### Watch your tasks
 
@@ -112,7 +122,7 @@ You will be asked to input fields below consistently
 1. Choose date from (required)
 2. Choose date to (required)
 
-By default, both fields are current day's date of your computer system. So, if you need to get a list of tasks for today just press enter twice quickly, that's it.
+By default, both of these fields are current day's date of your computer system. So, if you need to get a list of tasks for today just press enter twice quickly, that's it.
 
 In case you want to get a list of tasks from 2022-02-02 to 2022-07-15 your fields must be filled this way:
 
@@ -164,6 +174,8 @@ You will be asked to fill task id.
 
 1. Task number (required)
 
+*Task number*
+
 By default, task number is 1. In our case task number is 111.
 If your task exists you get complete descritpion and new options.
 
@@ -207,7 +219,7 @@ Let's look at the final result:
 
 During updating you can see these two tips on the screen
 
-In my case task is running and i dont have task ended value by default, so i choose "now" to finish task with current system time. 
+In my case, task is running and  dont have task ended value by default, so i choose "now" to finish task with current system time. 
 
 If you wish you can enter time in proper format (15:00:00) instead of "now" or "-".
 
@@ -228,7 +240,7 @@ After getting a list with date you need type "exit".
 
 ## Console
 
-Personally speaking, console is more comfortable way to manipulate tasks.
+Personally, console is more comfortable way to manipulate tasks.
 
 **If you didn't read Menu guide above i strongly recommend to do it, because console commands will show you main interface components we described before.**
 

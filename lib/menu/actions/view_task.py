@@ -35,7 +35,10 @@ class ViewTask(Action):
 
         if hasattr(item.action, 'name'):
              if item.action.name == 'delete':
-                self.__task.delete(id)
+                sure = Confirm.ask('Are you sure?')
+                if sure:
+                    self.__task.delete(id)
+
                 self.__previous.render()
                 item = self.__previous.ask_for_choice()
                 self.__previous.call_action(item)

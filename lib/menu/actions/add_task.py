@@ -12,6 +12,46 @@ class AddTask(Action):
         self.__menu = menu
         self.__task = Task()
 
+    def validate_and_get(self, date, name, start, end, description):
+        validated_date = validate_date_pattern(date)
+        validated_start = validate_date_pattern(start, r'\d\d:\d\d:\d\d')
+
+        if validated_date is False:
+            self.__menu.warn('Invalid Date format. Example: 2022-02-02')
+            return False
+
+        if validated_start is False:
+            self.__menu.warn('Invalid Start format. Example: 00:30:00')
+            return False
+
+        if end is not None:
+            if validate_date_pattern(end, r'\d\d:\d\d:\d\d') is False:
+                self.__menu.warn('Invalid End format. Example: 00:32:00')
+                return False
+            end = f'{date} {end}'
+        
+        if name is None:
+            self.__menu.warn('Name is required')
+            return False
+        
+        start = f'{date} {start}'
+
+        return OrderedDict([('name', name), ('start', start), ('end', end), ('description', description), ('date', date)])
+
+    def do_cli(self, date, name, start, end, description):
+        data = self.validate_and_get(date, name, start, end, description)
+        if data:
+            id = self.__task.add(
+                name=data['name'], 
+                start=data['start'], 
+                end=data['end'], 
+                description=data['description'],
+                date_created=date
+            )
+            return id
+        return False
+
+
     def ask_and_validate(self):
         date = Prompt.ask('Date', default=datetime.now().strftime( get_year_pattern() ))
         name = Prompt.ask('Task name', default=None)

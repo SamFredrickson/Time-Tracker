@@ -54,10 +54,19 @@ def task_delete(id: int = typer.Option(..., help="Task id")):
      delete_action.cli_do(id)
 
 @app.command(help='Create task')
-def task_create():
+def task_create(
+    date: str = typer.Option(datetime.now().strftime(get_year_pattern()), help="Date"), 
+    name: str = typer.Option(..., help="Task name"),
+    start: str = typer.Option(datetime.now().strftime( get_time_pattern() ), help="Task start"),
+    end: str = typer.Option(None, help="Task end"),
+    description: str = typer.Option(None, help="Description")
+):
      main_menu = Main()
-     delete_action = AddTask(main_menu)
-     delete_action.do()
+     add_action = AddTask(main_menu)
+     id = add_action.do_cli(date, name, start, end, description)
+     if id:
+         main_menu.success(f'Task number {id} successfully created')
+         return True
 
 @app.command(help='Update task')
 def task_update(id: int = typer.Option(..., help="Task id")):
@@ -93,8 +102,18 @@ def task_continue(
     if task is None:
         main_menu.warn('Task does not exist')
         return False
-    model.update(id, 'end', None)
-    main_menu.success('Task is in progress again')
+
+    if task.end is None:
+        main_menu.warn('This task is still in progress')
+        return False
+
+    model.add(
+        name=task.name, 
+        description=task.description, 
+        date_created=task.date_created
+    )
+
+    main_menu.success('New task with a new time created successfully')
 
 @app.command(help='Export tasks to file')
 def task_export(
