@@ -287,7 +287,9 @@ Options:
 
 As we know task-list is section where we can watch our tasks. In menu mode we must provide some extra info like date range before get list. Task list console command is not an exception. 
 
-Enter ``tracker task-list`` command to get list for today, enter ``tracker task-list --date-from 2022-02-02 --date-to 2022-03-04`` to list from and to specific days.
+Enter ``tracker task-list`` command to get list for today. 
+
+Enter ``tracker task-list --date-from 2022-02-02 --date-to 2022-03-04`` to list from and to specific days.
 
 So, these console commands work in the same way like menu mode, but you don't need to launch menu mode every time.
 
