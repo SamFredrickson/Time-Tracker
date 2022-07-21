@@ -54,7 +54,7 @@ Use this command to keep container running
 docker run -it samfredrickson/timetracker sh
 ```
 
-After successfull pulling of image you jumps into container env where you can execute any commands.
+After successfull pulling of image you jump into container env where you can execute any commands.
 
 Read *Usage* section below to find out availiable commands.
 
